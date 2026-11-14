@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Who delivers under pressure? | RR Round 1 dashboard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#12235b;--mut:#5b6685;--line:#dfe3ee;--pink:#e6007e;--pinkbg:#fde6f2;--blue:#2f6fde;--track:#e9ecf5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1430;--card:#16204a;--ink:#eef1fb;--mut:#a3adcf;--line:#2a3568;--pink:#ff4fa9;--pinkbg:#3a1a3f;--blue:#7aa5ff;--track:#222d5e;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1430;--card:#16204a;--ink:#eef1fb;--mut:#a3adcf;--line:#2a3568;--pink:#ff4fa9;--pinkbg:#3a1a3f;--blue:#7aa5ff;--track:#222d5e;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Barlow,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:22px 16px 40px}
+h1{font:700 clamp(28px,6vw,42px)/1.05 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 6px;letter-spacing:.2px}
+.sub{color:var(--mut);margin:0 0 18px;max-width:62ch}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.tab{background:none;border:0;color:var(--mut);font:600 15px Barlow,sans-serif;padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--pink)}
+.tab:focus-visible,.seg button:focus-visible,.row:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.seg{display:inline-flex;background:var(--track);border-radius:10px;padding:3px;margin-bottom:12px}
+.seg button{border:0;background:none;color:var(--mut);font:600 14px Barlow,sans-serif;padding:7px 16px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.hint{color:var(--mut);font-size:13px;margin:0 0 10px}
+.row{display:grid;grid-template-columns:34px 1fr auto;gap:4px 12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin-bottom:8px;cursor:pointer;width:100%;text-align:left;color:inherit;font:inherit}
+.rk{font:700 24px "Barlow Condensed",sans-serif;color:var(--pink)}
+.nm{font-weight:600}
+.tm{color:var(--mut);font-size:13px;font-weight:400;margin-left:6px}
+.bar{grid-column:2;height:8px;background:var(--track);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--pink);border-radius:5px}
+.sc{font:700 22px "Barlow Condensed",sans-serif;text-align:right}
+.sc small{display:block;font:500 11px Barlow,sans-serif;color:var(--mut)}
+.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:20px;padding:1px 9px;margin-left:8px}
+.High{background:#d9f3e6;color:#0d6b3f}.Medium{background:#fff1cc;color:#7a5600}.Lower{background:#ffe0e0;color:#8f1d1d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .High{background:#12402b;color:#7ee2ae}:root:not([data-theme="light"]) .Medium{background:#4a3a0c;color:#ffd978}:root:not([data-theme="light"]) .Lower{background:#4a1c1c;color:#ffaaaa}}
+.det{display:none;grid-column:1/-1;border-top:1px dashed var(--line);margin-top:8px;padding-top:10px}
+.row[aria-expanded="true"] .det{display:block}
+.note{margin:0 0 8px;font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.st{background:var(--bg);border-radius:8px;padding:8px 10px}
+.st b{display:block;font:700 19px "Barlow Condensed",sans-serif}
+.st span{font-size:12px;color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.card h2{font:700 20px "Barlow Condensed",sans-serif;margin:0 0 4px}
+.card p{margin:0;color:var(--mut)}
+.steps{counter-reset:s;padding:0;list-style:none;margin:0}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.steps li:before{content:counter(s);font:700 22px "Barlow Condensed",sans-serif;color:var(--pink)}
+.steps b{display:block}
+.steps span{color:var(--mut)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:var(--mut);font-weight:600}
+.legend{font-size:13px;color:var(--mut);margin-top:14px}
+.legend b{color:var(--ink)}
+[hidden]{display:none!important}
+</style></head>
+<body><div class="wrap">
+<h1>Who delivers when it matters?</h1>
+<p class="sub">The 10 batters and 10 bowlers who stay most dependable in high-pressure moments, from 731 IPL and T20I matches in the Rajasthan Royals data pack.</p>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" aria-selected="true" data-t="rank">Rankings</button>
+<button class="tab" role="tab" aria-selected="false" data-t="how">How it works</button>
+<button class="tab" role="tab" aria-selected="false" data-t="rr">Rajasthan Royals lens</button></div>
+
+<section id="rank">
+<div class="seg" role="group" aria-label="Choose role"><button data-r="bat" aria-pressed="true">Batters</button><button data-r="bowl" aria-pressed="false">Bowlers</button></div>
+<p class="hint">Tap a player to see how they perform under pressure compared with normal play.</p>
+<div id="list"></div>
+<p class="legend"><b>Score</b> is the Pressure Reliability Rating (50 is average among eligible players; higher is better). <b>Confidence</b> shows how often the player stays in the top 10 when the data is resampled 400 times: High 60% or more, Medium 40-59%, Lower under 40%. <b>†</b> Pakistan players are ranked on the data but cannot play in the IPL.</p>
+</section>
+
+<section id="how" hidden>
+<ol class="steps">
+<li><div><b>Find the pressure moments</b><span>A win-probability model scores every ball. The top 15% of balls that can swing the result most, while the match is still open, count as high pressure (26,059 of 174,741 balls).</span></div></li>
+<li><div><b>Judge each ball fairly</b><span>Every ball is compared with what an average player would do in the same situation against the same opposition. Runs and wickets are both counted.</span></div></li>
+<li><div><b>Be careful with small samples</b><span>Pressure samples are small, so lucky streaks are pulled back toward a player's normal level. This is what keeps one hot innings from making a ranking.</span></div></li>
+<li><div><b>Check consistency and robustness</b><span>Players are scored on value plus match-to-match consistency, then ranked by how well they hold up across 400 resamples and 11 alternative methods. Players who lost win probability overall under pressure are removed.</span></div></li></ol>
+<div class="card" style="margin-top:14px"><h2>What the data says</h2><p>Pressure balls move win probability about 3 times as much as normal balls, and wickets fall 46% more often. The top of each list is firm; ranks 7 to 10 are close calls and are labelled with lower confidence.</p></div>
+</section>
+
+<section id="rr" hidden>
+<div class="card"><h2>A gap for Rajasthan Royals</h2><p>No player in the Royals' IPL 2026 squad listing reaches either top 10. Their best pressure bowler ranks 16th and their best pressure batter 35th among eligible players.</p></div>
+<table><thead><tr><th>RR player</th><th>Batter rank</th><th>Bowler rank</th></tr></thead><tbody id="rrb"></tbody></table>
+<p class="legend">Only players with enough pressure balls are ranked. Origin and auction availability are not in the data pack, so check retentions, purse and base prices before bidding.</p>
+</section>
+</div>
+<script>
+const D={"bat":[{"rank":1,"name":"Shashank Singh","team":"PBKS","prr":80,"p10":0.91,"k":10,"n":10,"hit":60,"balls":148,"pak":false,"origin":"Indian","note":"Death-over finisher; hardest to dismiss under pressure","a":189,"a0":154,"b":1.4,"c":24,"d":69},{"rank":2,"name":"Suryakumar Yadav","team":"MI","prr":72,"p10":0.63,"k":11,"n":11,"hit":54,"balls":312,"pak":false,"origin":"Indian","note":"Most evidence of any leader; finisher at 4","a":207,"a0":161,"b":6.1,"c":32,"d":47},{"rank":3,"name":"Virat Kohli","team":"RCB","prr":68,"p10":0.45,"k":8,"n":8,"hit":59,"balls":184,"pak":false,"origin":"Indian","note":"Anchor who accelerates; lowest dismissal risk","a":159,"a0":145,"b":2.7,"c":20,"d":47},{"rank":4,"name":"Heinrich Klaasen","team":"SRH","prr":67,"p10":0.5,"k":11,"n":11,"hit":58,"balls":250,"pak":false,"origin":"Overseas","note":"Aggressive chase finisher","a":195,"a0":161,"b":6.0,"c":27,"d":60},{"rank":5,"name":"Mohammad Rizwan","team":"","prr":66,"p10":0.28,"k":8,"n":8,"hit":56,"balls":148,"pak":true,"origin":"Overseas","note":"Steady accumulator, low boundary power","a":154,"a0":123,"b":3.4,"c":15,"d":35},{"rank":6,"name":"Andre Russell","team":"KKR","prr":63,"p10":0.61,"k":10,"n":11,"hit":62,"balls":243,"pak":false,"origin":"Overseas","note":"Death hitter with the best hit rate","a":201,"a0":156,"b":6.6,"c":32,"d":77},{"rank":7,"name":"Tim David","team":"RCB","prr":66,"p10":0.42,"k":11,"n":11,"hit":57,"balls":381,"pak":false,"origin":"Overseas","note":"Death finisher with IPL and T20I proof","a":192,"a0":168,"b":6.3,"c":29,"d":71},{"rank":8,"name":"Naman Dhir","team":"MI","prr":60,"p10":0.64,"k":4,"n":8,"hit":57,"balls":112,"pak":false,"origin":"Indian","note":"High upside, thinnest evidence","a":228,"a0":154,"b":6.2,"c":38,"d":86},{"rank":9,"name":"Jos Buttler","team":"GT","prr":63,"p10":0.32,"k":8,"n":10,"hit":56,"balls":192,"pak":false,"origin":"Overseas","note":"Elite vs pace, weaker vs spin","a":188,"a0":154,"b":5.2,"c":30,"d":52},{"rank":10,"name":"Nicholas Pooran","team":"LSG","prr":63,"p10":0.27,"k":8,"n":11,"hit":54,"balls":253,"pak":false,"origin":"Overseas","note":"Left-hander; strong IPL, weaker T20I","a":169,"a0":157,"b":5.5,"c":23,"d":53}],"bowl":[{"rank":1,"name":"Sunil Narine","team":"KKR","prr":80,"p10":0.89,"k":11,"n":11,"hit":56,"balls":173,"pak":false,"origin":"Overseas","note":"Economy and wickets under pressure","a":7.18,"a0":9.1,"b":0.49,"c":38,"d":34},{"rank":2,"name":"Rashid Khan","team":"GT","prr":75,"p10":0.91,"k":11,"n":11,"hit":57,"balls":254,"pak":false,"origin":"Overseas","note":"Leg-spin at the death; top wicket rate","a":7.84,"a0":9.12,"b":0.67,"c":35,"d":64},{"rank":3,"name":"Varun Chakravarthy","team":"KKR","prr":69,"p10":0.55,"k":11,"n":11,"hit":52,"balls":236,"pak":false,"origin":"Indian","note":"Dots plus wickets; strong T20I record","a":7.69,"a0":9.02,"b":0.44,"c":40,"d":34},{"rank":4,"name":"Jasprit Bumrah","team":"MI","prr":74,"p10":0.44,"k":11,"n":11,"hit":52,"balls":362,"pak":false,"origin":"Indian","note":"Biggest volume at the death","a":7.95,"a0":9.96,"b":0.41,"c":34,"d":78},{"rank":5,"name":"Kuldeep Yadav","team":"DC","prr":67,"p10":0.65,"k":11,"n":11,"hit":53,"balls":273,"pak":false,"origin":"Indian","note":"Wicket-taking wrist-spinner","a":7.84,"a0":9.62,"b":0.49,"c":33,"d":43},{"rank":6,"name":"Axar Patel","team":"DC","prr":67,"p10":0.63,"k":9,"n":11,"hit":51,"balls":255,"pak":false,"origin":"Indian","note":"Lowest economy at volume","a":6.88,"a0":9.19,"b":0.38,"c":35,"d":31},{"rank":7,"name":"Abrar Ahmed","team":"","prr":59,"p10":0.29,"k":4,"n":8,"hit":48,"balls":95,"pak":true,"origin":"Overseas","note":"Very economical, small sample","a":6.58,"a0":8.69,"b":0.58,"c":41,"d":35},{"rank":8,"name":"Yuzvendra Chahal","team":"PBKS","prr":59,"p10":0.31,"k":2,"n":11,"hit":47,"balls":369,"pak":false,"origin":"Indian","note":"Wicket-taker, economy near par","a":9.63,"a0":9.79,"b":0.6,"c":30,"d":47},{"rank":9,"name":"Krunal Pandya","team":"RCB","prr":60,"p10":0.28,"k":1,"n":8,"hit":48,"balls":123,"pak":false,"origin":"Indian","note":"Efficient left-arm spin, IPL only","a":7.3,"a0":8.89,"b":0.35,"c":37,"d":15},{"rank":10,"name":"Mitchell Santner","team":"MI","prr":59,"p10":0.27,"k":3,"n":10,"hit":49,"balls":121,"pak":false,"origin":"Overseas","note":"Strong T20I, weaker IPL","a":7.82,"a0":9.8,"b":0.43,"c":28,"d":43}],"rr":[{"name":"Jofra Archer","bat":null,"bowl":16},{"name":"Ravindra Jadeja","bat":37,"bowl":28},{"name":"Tushar Deshpande","bat":null,"bowl":33},{"name":"Dhruv Jurel","bat":35,"bowl":null},{"name":"Shimron Hetmyer","bat":47,"bowl":null},{"name":"Sandeep Sharma","bat":null,"bowl":49},{"name":"Dasun Shanaka","bat":49,"bowl":null},{"name":"Sam Curran","bat":54,"bowl":67},{"name":"Adam Milne","bat":null,"bowl":55},{"name":"Riyan Parag","bat":57,"bowl":null},{"name":"Ravi Bishnoi","bat":null,"bowl":66}],"nb":70,"nw":87};
+let role='bat',open=null;
+const $=s=>document.querySelector(s);
+function conf(p){return p>=.6?'High':p>=.4?'Medium':'Lower'}
+function render(){
+ const rows=D[role];
+ $('#list').innerHTML=rows.map((p,i)=>{
+  const w=Math.max(8,Math.min(100,(p.prr-40)/45*100)),c=conf(p.p10),bat=role==='bat';
+  const st=bat?[['Runs per 100 balls under pressure',p.a+' (normal '+p.a0+')'],['Dismissed per 100 pressure balls',p.b],['Boundary balls under pressure',p.c+'%'],['Pressure balls at the death',p.d+'%']]
+             :[['Economy under pressure',p.a+' (expected '+p.a0+')'],['Wickets per over',p.b],['Dot balls under pressure',p.c+'%'],['Pressure balls at the death',p.d+'%']];
+  st.push(['Pressure balls in sample',p.balls],['Appearances adding win probability',p.hit+'%'],['Stays in top 10 in alternative methods',p.k+' of '+p.n]);
+  return `<button class="row" aria-expanded="${open===i}" data-i="${i}"><span class="rk">${p.rank}</span><span><span class="nm">${p.name}${p.pak?' †':''}</span><span class="tm">${p.team||'No IPL team listed'}</span><span class="chip ${c}">${c} confidence</span></span><span class="sc">${p.prr}<small>score</small></span><span class="bar"><i style="width:${w}%"></i></span><span class="det"><p class="note">${p.note}${p.pak?' (not IPL-eligible)':''}</p><span class="stats">${st.map(s=>`<span class="st"><b>${s[1]}</b><span>${s[0]}</span></span>`).join('')}</span></span></button>`}).join('');
+ document.querySelectorAll('.row').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;open=open===i?null:i;render();const el=document.querySelector('.row[data-i="'+i+'"]');if(el)el.focus()});
+}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{role=b.dataset.r;open=null;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()});
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));['rank','how','rr'].forEach(id=>$('#'+id).hidden=id!==t.dataset.t)});
+$('#rrb').innerHTML=D.rr.map(r=>`<tr><td>${r.name}</td><td>${r.bat?r.bat+' of '+D.nb:'-'}</td><td>${r.bowl?r.bowl+' of '+D.nw:'-'}</td></tr>`).join('');
+render();
+</script></body></html>
